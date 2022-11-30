@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/367e0dbf-94b7-4f57-9493-0abebb4ba467/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/ReRopaServer",
+  "appService.deploySubpath": "."
+}
