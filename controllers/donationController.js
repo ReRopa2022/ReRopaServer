@@ -10,30 +10,34 @@ const donateItem = asyncHandler(async (req, res) => {
     res.status(401);
     throw new Error("User not found");
   }
-  const { type, size, age, gender, quantity } = req.body;
+  const { types, seasons, sizes, sectors, genders, quantity, image } = req.body;
 
-  if (!type || !size || !age || !gender || !quantity) {
+  if (!types || !sizes || !seasons || !genders || !quantity) {
     res.status(400);
     throw new Error("Please include all fields.");
   }
 
   const donation = await Donation.create({
-    type,
-    size,
-    age,
-    gender,
+    types,
+    seasons,
+    genders,
+    sectors,
+    sizes,
     quantity,
+    image,
     user,
   });
 
   if (donation) {
     res.status(201).json({
       _id: donation._id,
-      type: donation.type,
-      size: donation.size,
-      age: donation.age,
-      gender: donation.gender,
+      types: donation.types,
+      seasons: donation.seasons,
+      genders: donation.genders,
+      sectors: donation.sectors,
+      sizes: donation.sizes,
       quantity: donation.quantity,
+      image: donation.image,
       user: user.email,
     });
   } else {

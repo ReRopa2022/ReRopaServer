@@ -2,23 +2,23 @@ const mongoose = require("mongoose");
 
 const donationSchema = new mongoose.Schema(
   {
-    type: {
-      type: String,
+    types: {
+      type: [],
       required: [true, "Please specify the season."],
     },
-    size: {
-      type: String,
-      required: [true, "Please add a size."],
+    seasons: {
+      type: [],
     },
-    age: {
-      type: String,
-      required: [true, "Please add age."],
+    genders: {
+      type: [],
+      required: [true, "Please enter genders."],
     },
-
-    gender: {
-      type: String,
-      enum: ["male", "female"],
-      required: [true, "Please enter a gender."],
+    sizes: {
+      type: [],
+      required: [true, "Please add sizes."],
+    },
+    sectors: {
+      type: [],
     },
     quantity: {
       type: Number,
@@ -26,6 +26,10 @@ const donationSchema = new mongoose.Schema(
     },
 
     user: String,
+    image: {
+      type: String,
+      default: "default.jpg",
+    },
   },
 
   {
