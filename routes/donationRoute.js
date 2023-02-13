@@ -1,11 +1,13 @@
 const express = require("express");
-const multer = require("multer");
-
 const router = express.Router();
-const { protect } = require("../middleware/authMiddleware");
 
-const { donateItem } = require("../controllers/donationController");
+const {
+  donateItem,
+  getDonations,
+  upload,
+} = require("../controllers/donationController");
 
-router.post("/", protect, donateItem);
+router.post("/", upload.single("image"), donateItem);
+router.get("/", getDonations);
 
 module.exports = router;

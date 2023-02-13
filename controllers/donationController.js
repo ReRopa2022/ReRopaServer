@@ -1,32 +1,65 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userModel");
-
+const multer = require("multer");
 const Donation = require("../models/donationModel");
+const path = require("path");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, "../public/img/uploads/"));
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === "image/png" || file.mimetype === "image/jpeg") {
+    cb(null, true);
+    console.log("Donation uploaded successfully.");
+  } else {
+    cb(null, false);
+    console.log("Donation denied.");
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  //limits: { fileSize: 1024 * 1024 * 5 },
+  fileFilter: fileFilter,
+});
 
 const donateItem = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user.id);
-
-  if (!user) {
-    res.status(401);
-    throw new Error("User not found");
-  }
-  const { types, seasons, sizes, sectors, genders, quantity, image } = req.body;
+  const { types, seasons, sizes, sectors, genders, quantity, image, user } =
+    req.body;
 
   if (!types || !sizes || !seasons || !genders || !quantity) {
     res.status(400);
     throw new Error("Please include all fields.");
   }
+  let donation;
 
-  const donation = await Donation.create({
-    types,
-    seasons,
-    genders,
-    sectors,
-    sizes,
-    quantity,
-    image,
-    user,
-  });
+  if (!req.file) {
+    donation = await Donation.create({
+      types,
+      seasons,
+      genders,
+      sectors,
+      sizes,
+      quantity,
+      image,
+      user,
+    });
+  } else {
+    donation = await Donation.create({
+      types,
+      seasons,
+      genders,
+      sectors,
+      sizes,
+      quantity,
+      image: req.file.filename,
+      user,
+    });
+  }
 
   if (donation) {
     res.status(201).json({
@@ -38,7 +71,7 @@ const donateItem = asyncHandler(async (req, res) => {
       sizes: donation.sizes,
       quantity: donation.quantity,
       image: donation.image,
-      user: user.email,
+      user: user,
     });
   } else {
     res.status(400);
@@ -46,4 +79,10 @@ const donateItem = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { donateItem };
+const getDonations = asyncHandler(async (req, res, next) => {
+  Donation.find()
+    .then((data) => res.json(data))
+    .catch((error) => res.json(error));
+});
+
+module.exports = { donateItem, getDonations, upload };

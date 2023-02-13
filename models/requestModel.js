@@ -1,13 +1,20 @@
 const mongoose = require("mongoose");
 
-const donationSchema = new mongoose.Schema(
+const requestSchema = new mongoose.Schema(
   {
-    types: {
+    organization: { type: String },
+    name: {
       type: String,
-      required: [true, "Please specify the season."],
+    },
+    phone: {
+      type: String,
+    },
+    address: {
+      type: String,
     },
     seasons: {
       type: [],
+      required: [true, "Please specify the season."],
     },
     genders: {
       type: String,
@@ -22,13 +29,9 @@ const donationSchema = new mongoose.Schema(
     },
     quantity: {
       type: Number,
-      required: [true, "Please add quantity"],
     },
-
-    user: { type: String },
-    image: {
+    isUrgent: {
       type: String,
-      default: "default.jpg",
     },
   },
 
@@ -37,5 +40,5 @@ const donationSchema = new mongoose.Schema(
   }
 );
 
-const Donation = mongoose.model("Donation", donationSchema);
-module.exports = Donation;
+const Request = mongoose.model("Request", requestSchema);
+module.exports = Request;

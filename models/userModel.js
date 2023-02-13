@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema(
           "Passwords are not the same. Please try again to confirm your password.",
       },
     },
+    isManager: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   {
