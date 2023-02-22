@@ -17,8 +17,7 @@ const requestDonation = asyncHandler(async (req, res) => {
   } = req.body;
 
   if (!sizes || !seasons || !genders || !quantity) {
-    res.status(400);
-    throw new Error("Please include all fields.");
+    res.status(400).json({ Error: "Please include all fields." });
   }
 
   const request = await Request.create({

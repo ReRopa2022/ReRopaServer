@@ -18,6 +18,12 @@ const locationSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add information about the location."],
     },
+    lat: {
+      type: Number,
+    },
+    lng: {
+      type: Number,
+    },
   },
 
   {

@@ -12,16 +12,16 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // Validation
   if (!email || !password) {
-    res.status(400);
-    throw new Error("Please include all fields.");
+    res.status(400).json({ status: "Please include all fields." });
+    return;
   }
 
   //Find if user already exists
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(400);
-    throw new Error("User already exists.");
+    res.status(400).json({ status: "User already exists." });
+    return;
   }
 
   //Create user
@@ -62,8 +62,8 @@ const loginUser = asyncHandler(async (req, res) => {
   //2) Check if user exists and password is correct
   const user = await User.findOne({ email }).select("+password");
   if (!user || !(await user.correctPassword(password, user.password))) {
-    res.status(401);
-    throw new Error("Incorrect email or password.");
+    res.status(401).json({ status: "Incorrect email or password." });
+    return;
   }
   res.status(200).json({
     _id: user._id,
@@ -89,7 +89,7 @@ const getMe = asyncHandler(async (req, res) => {
 //Generate token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: "30d",
+    expiresIn: "3h",
   });
 };
 
