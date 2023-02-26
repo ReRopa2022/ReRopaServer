@@ -24,7 +24,13 @@ const donationSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Please add quantity"],
     },
-
+    condition: {
+      type: String,
+      required: [true, "Please enter the condition."],
+    },
+    status: {
+      type: String,
+    },
     user: { type: String },
     image: {
       type: String,

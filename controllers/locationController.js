@@ -2,9 +2,9 @@ const asyncHandler = require("express-async-handler");
 const Location = require("../models/locationModel");
 
 const addLocation = asyncHandler(async (req, res) => {
-  const { city, street, street_no, info, lng, lat } = req.body;
+  const { city, street, street_no, info, type } = req.body;
 
-  if (!city || !street || !street_no || !info || !lat || !lng) {
+  if (!city || !street || !street_no || !info || !type) {
     res.status(400).json({ Error: "Please include all fields." });
   }
 
@@ -13,8 +13,7 @@ const addLocation = asyncHandler(async (req, res) => {
     street,
     street_no,
     info,
-    lat,
-    lng,
+    type,
   });
 
   if (location) {
@@ -24,8 +23,7 @@ const addLocation = asyncHandler(async (req, res) => {
       street: location.street,
       street_no: location.street_no,
       info: location.info,
-      lat: location.lat,
-      lng: location.lng,
+      type: location.type,
     });
   } else {
     res.status(400);

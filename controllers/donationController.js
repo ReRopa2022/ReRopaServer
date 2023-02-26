@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const multer = require("multer");
 const Donation = require("../models/donationModel");
 const path = require("path");
+const { set } = require("mongoose");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -28,10 +29,19 @@ const upload = multer({
 });
 
 const donateItem = asyncHandler(async (req, res) => {
-  const { types, seasons, sizes, sectors, genders, quantity, image, user } =
-    req.body;
+  const {
+    types,
+    seasons,
+    sizes,
+    sectors,
+    genders,
+    quantity,
+    condition,
+    image,
+    user,
+  } = req.body;
 
-  if (!types || !sizes || !seasons || !genders || !quantity) {
+  if (!types || !sizes || !seasons || !genders || !quantity || !condition) {
     res.status(400).json({ Error: "Please include all fields." });
   }
   let donation;
@@ -46,6 +56,7 @@ const donateItem = asyncHandler(async (req, res) => {
       quantity,
       image,
       user,
+      condition,
     });
   } else {
     donation = await Donation.create({
@@ -57,6 +68,7 @@ const donateItem = asyncHandler(async (req, res) => {
       quantity,
       image: req.file.filename,
       user,
+      condition,
     });
   }
 
@@ -70,6 +82,7 @@ const donateItem = asyncHandler(async (req, res) => {
       sizes: donation.sizes,
       quantity: donation.quantity,
       image: donation.image,
+      condition: donation.condition,
       user: user,
     });
   } else {
@@ -84,4 +97,8 @@ const getDonations = asyncHandler(async (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
-module.exports = { donateItem, getDonations, upload };
+const updateStatus = async (req, res, next) => {
+  Donation.findByIdAndUpdate({ id: donation_id }, { set: { status: status } });
+};
+
+module.exports = { donateItem, getDonations, upload, updateStatus };
