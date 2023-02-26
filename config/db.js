@@ -2,9 +2,15 @@
 const colors = require("colors");
 const mongoose = require("mongoose");
 
+//For cloud running
+//process.env.MONGO_URI
+
+//For local running
+//MONGO_LOCAL_URI
+
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
+    const conn = await mongoose.connect(process.env.MONGO_LOCAL_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline);
   } catch (err) {
     console.log(`Error: ${err.message}`.red.underline.bold);
