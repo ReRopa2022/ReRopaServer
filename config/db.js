@@ -10,7 +10,9 @@ const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_LOCAL_URI);
+    const conn = await mongoose.connect(
+      "mongodb+srv://ReRopa:reropadarg1@reropa.qmtfdmz.mongodb.net/test"
+    );
     console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline);
   } catch (err) {
     console.log(`Error: ${err.message}`.red.underline.bold);
