@@ -98,7 +98,7 @@ const getDonations = asyncHandler(async (req, res, next) => {
 });
 
 const updateStatus = async (req, res, next) => {
-  Donation.findByIdAndUpdate({ id: donation_id }, { set: { status: status } });
+  Donation.findByIdAndUpdate({ id: donation_id }, { $set: { status: status } });
 };
 
 module.exports = { donateItem, getDonations, upload, updateStatus };

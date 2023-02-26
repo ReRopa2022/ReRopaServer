@@ -10,6 +10,6 @@ const {
 
 router.post("/", upload.single("image"), donateItem);
 router.get("/", getDonations);
-router.update("/", updateStatus);
+router.patch("/", updateStatus);
 
 module.exports = router;
