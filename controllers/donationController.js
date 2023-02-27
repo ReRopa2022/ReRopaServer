@@ -98,7 +98,15 @@ const getDonations = asyncHandler(async (req, res, next) => {
 });
 
 const updateStatus = async (req, res, next) => {
-  Donation.findByIdAndUpdate({ id: donation_id }, { $set: { status: status } });
+  try {
+    const { id, status } = req.body;
+    await Donation.findOneAndUpdate({ id: id }, { $set: { status: status } });
+    res.status(200).json({
+      status: "Success",
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 module.exports = { donateItem, getDonations, upload, updateStatus };
