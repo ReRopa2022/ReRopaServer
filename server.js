@@ -18,6 +18,7 @@ app.use(cors());
 app.use("/api/users", require("./routes/userRoute"));
 app.use("/api/donate", require("./routes/donationRoute"));
 app.use("/api/request", require("./routes/requestRoute"));
+app.use("/api/excesses", require("./routes/excessesRoute"));
 app.use("/api/location", require("./routes/locationRoute"));
 
 app.listen(port, () => console.log("Backend server live on " + port));
