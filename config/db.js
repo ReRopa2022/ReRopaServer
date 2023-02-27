@@ -1,4 +1,4 @@
-//Connecting to db
+//Connecting
 const colors = require("colors");
 const mongoose = require("mongoose");
 
@@ -17,14 +17,14 @@ const connectDB = async () => {
 
 //For local running
 //MONGO_LOCAL_URI
-const connectLocalDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_LOCAL_URI);
-    console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline);
-  } catch (err) {
-    console.log(`Error: ${err.message}`.red.underline.bold);
-    process.exit(1);
-  }
-};
+// const connectLocalDB = async () => {
+//   try {
+//     const conn = await mongoose.connect(process.env.MONGO_URI);
+//     console.log(`MongoDB Connected: ${conn.connection.host}`.cyan.underline);
+//   } catch (err) {
+//     console.log(`Error: ${err.message}`.red.underline.bold);
+//     process.exit(1);
+//   }
+// };
 
-module.exports = { connectDB, connectLocalDB };
+module.exports = connectDB;
