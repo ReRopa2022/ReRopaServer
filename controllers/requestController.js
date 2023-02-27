@@ -53,4 +53,10 @@ const requestDonation = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { requestDonation };
+const getRequests = asyncHandler(async (req, res, next) => {
+  Request.find()
+    .then((data) => res.json(data))
+    .catch((error) => res.json(error));
+});
+
+module.exports = { requestDonation, getRequests };
