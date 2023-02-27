@@ -3,15 +3,6 @@ const mongoose = require("mongoose");
 const excessesSchema = new mongoose.Schema(
   {
     organization: { type: String },
-    name: {
-      type: String,
-    },
-    phone: {
-      type: String,
-    },
-    address: {
-      type: String,
-    },
     seasons: {
       type: [],
       required: [true, "Please specify the season."],
@@ -29,6 +20,7 @@ const excessesSchema = new mongoose.Schema(
     },
     quantity: {
       type: Number,
+      required: [true, "Please add sizes."],
     },
   },
 
