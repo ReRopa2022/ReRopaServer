@@ -27,4 +27,4 @@ const connectLocalDB = async () => {
   }
 };
 
-mongodb: module.exports = { connectDB, connectLocalDB };
+module.exports = { connectDB, connectLocalDB };
