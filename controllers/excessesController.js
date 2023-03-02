@@ -7,6 +7,7 @@ const addExcesses = asyncHandler(async (req, res) => {
 
   if (!sizes || !seasons || !genders || !quantity) {
     res.status(400).json({ Error: "Please include all fields." });
+    return;
   }
 
   const excesses = await Excesses.create({

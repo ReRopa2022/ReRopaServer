@@ -6,10 +6,12 @@ const {
   getDonations,
   updateStatus,
   upload,
+  deleteDonation,
 } = require("../controllers/donationController");
 
 router.post("/", upload.single("image"), donateItem);
 router.get("/", getDonations);
 router.patch("/", updateStatus);
+router.delete("/", deleteDonation);
 
 module.exports = router;

@@ -6,6 +6,7 @@ const addLocation = asyncHandler(async (req, res) => {
 
   if (!city || !street || !street_no || !info || !type) {
     res.status(400).json({ Error: "Please include all fields." });
+    return;
   }
 
   let location = await Location.create({

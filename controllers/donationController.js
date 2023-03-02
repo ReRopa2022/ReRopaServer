@@ -43,6 +43,7 @@ const donateItem = asyncHandler(async (req, res) => {
 
   if (!types || !sizes || !seasons || !genders || !quantity || !condition) {
     res.status(400).json({ Error: "Please include all fields." });
+    return;
   }
   let donation;
 
@@ -99,8 +100,11 @@ const getDonations = asyncHandler(async (req, res, next) => {
 
 const updateStatus = async (req, res, next) => {
   try {
-    const { id, status } = req.body;
-    await Donation.findOneAndUpdate({ id: id }, { $set: { status: status } });
+    const { donation_id, status } = req.body;
+    await Donation.findOneAndUpdate(
+      { id: donation_id },
+      { $set: { status: status } }
+    );
     res.status(200).json({
       status: "Success",
     });
@@ -109,4 +113,23 @@ const updateStatus = async (req, res, next) => {
   }
 };
 
-module.exports = { donateItem, getDonations, upload, updateStatus };
+const deleteDonation = async (req, res, next) => {
+  try {
+    const { donation_id } = req.body;
+
+    await Donation.findOneAndDelete({ id: donation_id });
+    res.status(200).json({
+      status: "Success",
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+module.exports = {
+  donateItem,
+  getDonations,
+  upload,
+  updateStatus,
+  deleteDonation,
+};
