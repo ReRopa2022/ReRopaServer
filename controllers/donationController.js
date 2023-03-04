@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const multer = require("multer");
 const Donation = require("../models/donationModel");
+const BookOrGameDonation = require("../models/donationBookOrGameModel");
 const path = require("path");
 const { set } = require("mongoose");
 
@@ -126,10 +127,35 @@ const deleteDonation = async (req, res, next) => {
   }
 };
 
+const donateBookOrGame = async (req, res, next) => {
+  try {
+    const { user, type, category, name, age } = req.body;
+    //Fields validation
+    if (!type || !category || !name || !age) {
+      res.status(400).json({ Error: "Please include all fields." });
+      return;
+    }
+    const bookOrGame = await new BookOrGameDonation({
+      user,
+      type,
+      category,
+      name,
+      age,
+    });
+    await bookOrGame.save();
+    res.status(200).json({
+      status: "Success",
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
 module.exports = {
   donateItem,
   getDonations,
   upload,
   updateStatus,
   deleteDonation,
+  donateBookOrGame,
 };
