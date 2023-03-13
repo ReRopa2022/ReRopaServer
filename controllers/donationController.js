@@ -3,6 +3,7 @@ const multer = require("multer");
 const Donation = require("../models/donationModel");
 const BookOrGameDonation = require("../models/donationBookOrGameModel");
 const path = require("path");
+const Request = require("../models/requestModel");
 const { set } = require("mongoose");
 
 const storage = multer.diskStorage({
@@ -46,31 +47,54 @@ const donateItem = asyncHandler(async (req, res) => {
     res.status(400).json({ Error: "Please include all fields." });
     return;
   }
+
   let donation;
 
-  if (!req.file) {
-    donation = await Donation.create({
-      types,
-      seasons,
-      genders,
-      sectors,
-      sizes,
-      quantity,
-      image,
-      user,
-      condition,
-    });
+  // const request = await Request.aggregate([
+  //   {
+  //     $match: { seasons: seasons },
+  //   },
+  //   { $match: { genders: genders } },
+  //   { $match: { sizes: sizes} },
+  //   { $match: { sectors: sectors } },
+  // ]);
+
+  const request = await Request.find({
+    seasons: { $in: seasons },
+    genders: { $in: genders },
+    sizes: { $in: sizes },
+    sectors: { $in: sectors },
+  });
+
+  if (request[0]) {
+    if (!req.file) {
+      donation = await Donation.create({
+        types,
+        seasons,
+        genders,
+        sectors,
+        sizes,
+        quantity,
+        image,
+        user,
+        condition,
+      });
+    } else {
+      donation = await Donation.create({
+        types,
+        seasons,
+        genders,
+        sectors,
+        sizes,
+        quantity,
+        image: req.file.filename,
+        user,
+        condition,
+      });
+    }
   } else {
-    donation = await Donation.create({
-      types,
-      seasons,
-      genders,
-      sectors,
-      sizes,
-      quantity,
-      image: req.file.filename,
-      user,
-      condition,
+    res.status(200).json({
+      isRequired: false,
     });
   }
 
@@ -86,6 +110,7 @@ const donateItem = asyncHandler(async (req, res) => {
       image: donation.image,
       condition: donation.condition,
       user: user,
+      isRequired: true,
     });
   } else {
     res.status(400);
