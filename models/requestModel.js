@@ -27,9 +27,6 @@ const requestSchema = new mongoose.Schema(
     sectors: {
       type: [],
     },
-    quantity: {
-      type: Number,
-    },
     isUrgent: {
       type: String,
     },

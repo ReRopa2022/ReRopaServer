@@ -20,10 +20,6 @@ const donationSchema = new mongoose.Schema(
     sectors: {
       type: [],
     },
-    quantity: {
-      type: Number,
-      required: [true, "Please add quantity"],
-    },
     condition: {
       type: String,
       required: [true, "Please enter the condition."],

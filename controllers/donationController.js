@@ -31,33 +31,15 @@ const upload = multer({
 });
 
 const donateItem = asyncHandler(async (req, res) => {
-  const {
-    types,
-    seasons,
-    sizes,
-    sectors,
-    genders,
-    quantity,
-    condition,
-    image,
-    user,
-  } = req.body;
+  const { types, seasons, sizes, sectors, genders, condition, image, user } =
+    req.body;
 
-  if (!types || !sizes || !seasons || !genders || !quantity || !condition) {
+  if (!types || !sizes || !seasons || !genders || !condition) {
     res.status(400).json({ Error: "Please include all fields." });
     return;
   }
 
   let donation;
-
-  // const request = await Request.aggregate([
-  //   {
-  //     $match: { seasons: seasons },
-  //   },
-  //   { $match: { genders: genders } },
-  //   { $match: { sizes: sizes} },
-  //   { $match: { sectors: sectors } },
-  // ]);
 
   const request = await Request.find({
     seasons: { $in: seasons },
@@ -74,7 +56,6 @@ const donateItem = asyncHandler(async (req, res) => {
         genders,
         sectors,
         sizes,
-        quantity,
         image,
         user,
         condition,
@@ -86,7 +67,6 @@ const donateItem = asyncHandler(async (req, res) => {
         genders,
         sectors,
         sizes,
-        quantity,
         image: req.file.filename,
         user,
         condition,
@@ -106,7 +86,6 @@ const donateItem = asyncHandler(async (req, res) => {
       genders: donation.genders,
       sectors: donation.sectors,
       sizes: donation.sizes,
-      quantity: donation.quantity,
       image: donation.image,
       condition: donation.condition,
       user: user,
