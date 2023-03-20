@@ -76,6 +76,8 @@ const donateItem = asyncHandler(async (req, res) => {
     res.status(200).json({
       isRequired: false,
     });
+    console.log(donation);
+    return;
   }
 
   if (donation) {
@@ -91,7 +93,9 @@ const donateItem = asyncHandler(async (req, res) => {
       user: user,
       isRequired: true,
     });
+    console.log(donation);
   } else {
+    console.log(donation);
     res.status(400);
     throw new Error("Invalid donation data.");
   }
