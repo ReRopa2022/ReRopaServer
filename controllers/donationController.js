@@ -153,6 +153,7 @@ const donateBookOrGame = async (req, res, next) => {
     await bookOrGame.save();
     res.status(200).json({
       status: "Success",
+      isRequired: true,
     });
   } catch (err) {
     console.log(err.message);
