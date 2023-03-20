@@ -69,13 +69,13 @@ const donateItem = asyncHandler(async (req, res) => {
         genders,
         sectors,
         sizes,
-        image: {
+        image: new Image({
           name: req.file.filename,
           img: {
             data: fs.readFileSync("../public/img/uploads/" + req.file.filename),
             contentType: "image/png",
           },
-        },
+        }),
         user,
         condition,
       });
