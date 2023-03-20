@@ -9,14 +9,19 @@ const {
   deleteDonation,
   donateBookOrGame,
   getBookOrGames,
+  deleteBooKOrGameDonation,
+  updateBookGameStatus,
 } = require("../controllers/donationController");
 
-router.post("/", upload.single("image"), donateItem);
+router
+  .post("/", upload.single("image"), donateItem)
+  .get("/", getDonations)
+  .patch("/", updateStatus)
+  .delete("/", deleteDonation);
 router
   .post("/book-or-game", donateBookOrGame)
-  .get("/book-or-games", getBookOrGames);
-router.get("/", getDonations);
-router.patch("/", updateStatus);
-router.delete("/", deleteDonation);
+  .get("/book-or-game", getBookOrGames)
+  .delete("/book-or-game", deleteBooKOrGameDonation)
+  .patch("/book-or-game", updateBookGameStatus);
 
 module.exports = router;

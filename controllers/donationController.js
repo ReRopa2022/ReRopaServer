@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, "../public/img/uploads/"));
   },
   filename: (req, file, cb) => {
-    cb(null, req.user + "-" + new Date().toLocaleDateString("en-GB"));
+    cb(null, "reropaDonation" + "-" + Date.now().toString());
   },
 });
 const fileFilter = (req, file, cb) => {
@@ -63,19 +63,22 @@ const donateItem = asyncHandler(async (req, res) => {
         condition,
       });
     } else {
+      const image = new Image({
+        name: req.file.filename,
+        img: {
+          data: fs.readFileSync(
+            path.join(__dirname, "../public/img/uploads/", req.file.filename)
+          ),
+          contentType: req.file.mimetype,
+        },
+      }).save();
       donation = await Donation.create({
         types,
         seasons,
         genders,
         sectors,
         sizes,
-        image: new Image({
-          name: req.file.filename,
-          img: {
-            data: fs.readFileSync("../public/img/uploads/" + req.file.filename),
-            contentType: "image/png",
-          },
-        }),
+        image,
         user,
         condition,
       });
@@ -120,6 +123,34 @@ const updateStatus = async (req, res, next) => {
     const { donation_id, status } = req.body;
     await Donation.findOneAndUpdate(
       { id: donation_id },
+      { $set: { status: status } }
+    );
+    res.status(200).json({
+      status: "Success",
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+const deleteBooKOrGameDonation = async (req, res, next) => {
+  try {
+    const { bookorgame_id } = req.body;
+
+    await BookOrGameDonation.findOneAndDelete({ id: bookorgame_id });
+    res.status(200).json({
+      status: "Success",
+    });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
+
+const updateBookGameStatus = async (req, res, next) => {
+  try {
+    const { bookorgame_id, status } = req.body;
+    await BookOrGameDonation.findOneAndUpdate(
+      { id: bookorgame_id },
       { $set: { status: status } }
     );
     res.status(200).json({
@@ -182,4 +213,6 @@ module.exports = {
   deleteDonation,
   donateBookOrGame,
   getBookOrGames,
+  deleteBooKOrGameDonation,
+  updateBookGameStatus,
 };
