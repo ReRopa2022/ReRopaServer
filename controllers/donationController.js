@@ -1,7 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const multer = require("multer");
 const Donation = require("../models/donationModel");
+const Image = require("../models/imageModel");
 const BookOrGameDonation = require("../models/donationBookOrGameModel");
+const fs = require("fs");
 const path = require("path");
 const Request = require("../models/requestModel");
 const { set } = require("mongoose");
@@ -11,7 +13,7 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, "../public/img/uploads/"));
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null, req.user + "-" + new Date().toLocaleDateString("en-GB"));
   },
 });
 const fileFilter = (req, file, cb) => {
@@ -67,7 +69,13 @@ const donateItem = asyncHandler(async (req, res) => {
         genders,
         sectors,
         sizes,
-        image: req.file.filename,
+        image: {
+          name: req.file.filename,
+          img: {
+            data: fs.readFileSync("../public/img/uploads/" + req.file.filename),
+            contentType: "image/png",
+          },
+        },
         user,
         condition,
       });
@@ -160,6 +168,12 @@ const donateBookOrGame = async (req, res, next) => {
   }
 };
 
+const getBookOrGames = asyncHandler(async (req, res, next) => {
+  BookOrGameDonation.find()
+    .then((data) => res.json(data))
+    .catch((error) => res.json(error));
+});
+
 module.exports = {
   donateItem,
   getDonations,
@@ -167,4 +181,5 @@ module.exports = {
   updateStatus,
   deleteDonation,
   donateBookOrGame,
+  getBookOrGames,
 };

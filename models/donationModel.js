@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const Image = require("./imageModel").schema;
 const donationSchema = new mongoose.Schema(
   {
     types: {
@@ -29,8 +29,7 @@ const donationSchema = new mongoose.Schema(
     },
     user: { type: String },
     image: {
-      type: String,
-      default: "default.jpg",
+      type: Image,
     },
   },
 
