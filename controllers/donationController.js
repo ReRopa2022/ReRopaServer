@@ -143,7 +143,7 @@ const donateBookOrGame = async (req, res, next) => {
       res.status(400).json({ Error: "Please include all fields." });
       return;
     }
-    const bookOrGame = await new BookOrGameDonation({
+    const bookOrGame = await BookOrGameDonation.create({
       user,
       type,
       category,
