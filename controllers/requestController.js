@@ -15,7 +15,7 @@ const requestDonation = asyncHandler(async (req, res) => {
     isUrgent,
   } = req.body;
 
-  if (!sizes || !seasons || !genders || !quantity) {
+  if (!sizes || !seasons || !genders) {
     res.status(400).json({ Error: "Please include all fields." });
     return;
   }
