@@ -26,4 +26,6 @@ router
   .delete("/book-or-game", deleteBooKOrGameDonation)
   .patch("/book-or-game", updateBookGameStatus);
 
+router.post("/image", getImage);
+
 module.exports = router;
