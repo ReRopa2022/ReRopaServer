@@ -11,6 +11,7 @@ const {
   getBookOrGames,
   deleteBooKOrGameDonation,
   updateBookGameStatus,
+  getImage,
 } = require("../controllers/donationController");
 
 router
@@ -23,5 +24,7 @@ router
   .get("/book-or-game", getBookOrGames)
   .delete("/book-or-game", deleteBooKOrGameDonation)
   .patch("/book-or-game", updateBookGameStatus);
+
+router.post("/image", getImage);
 
 module.exports = router;
