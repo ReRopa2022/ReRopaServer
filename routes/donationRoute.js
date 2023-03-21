@@ -17,6 +17,7 @@ const {
 router
   .post("/", upload.single("image"), donateItem)
   .get("/", getDonations)
+  .post("/image", getImage)
   .patch("/", updateStatus)
   .delete("/", deleteDonation);
 router
