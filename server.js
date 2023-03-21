@@ -12,8 +12,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/public/img/uploads", express.static("/public/img/uploads"));
 const port = 5000 || process.env.PORT;
+const allowedOrigins = ["http://localhost:3000", "https://reropa.netlify.app"];
 
-app.use(cors());
+app.use(cors({ origin: allowedOrigins }));
 
 app.use("/api/users", require("./routes/userRoute"));
 app.use("/api/donate", require("./routes/donationRoute"));
