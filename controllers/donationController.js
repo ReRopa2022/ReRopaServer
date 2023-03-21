@@ -205,6 +205,13 @@ const getBookOrGames = asyncHandler(async (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
+const getImage = asyncHandler(async (req, res, next) => {
+  const { imageId } = req.body;
+  Image.find({ id: imageId })
+    .then((data) => res.json(data[0]))
+    .catch((error) => res.json(error));
+});
+
 module.exports = {
   donateItem,
   getDonations,
@@ -215,4 +222,5 @@ module.exports = {
   getBookOrGames,
   deleteBooKOrGameDonation,
   updateBookGameStatus,
+  getImage,
 };
