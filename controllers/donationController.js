@@ -207,7 +207,7 @@ const getBookOrGames = asyncHandler(async (req, res, next) => {
 
 const getImage = asyncHandler(async (req, res, next) => {
   const { imageId } = req.body;
-  Image.find({ id: imageId })
+  Image.findOne({ id: imageId })
     .then((data) => res.send(data))
     .catch((error) => res.json(error));
 });
