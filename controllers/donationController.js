@@ -21,8 +21,7 @@ const fileFilter = (req, file, cb) => {
     file.mimetype === "image/png" ||
     file.mimetype === "image/jpg" ||
     file.mimetype === "image/jfif" ||
-    file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/JPG"
+    file.mimetype === "image/jpeg" 
   ) {
     cb(null, true);
     console.log("Donation uploaded successfully.");
