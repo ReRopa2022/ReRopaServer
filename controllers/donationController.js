@@ -17,14 +17,12 @@ const storage = multer.diskStorage({
   },
 });
 const fileFilter = (req, file, cb) => {
-  const base64Data = file.buffer.toString("base64");
-  const base64Mimetype = base64Data.match(/^data:(.*);base64,/)[1];
   if (
-    base64Mimetype === "image/png" ||
-    base64Mimetype === "image/jpg" ||
-    base64Mimetype === "image/jpeg" ||
-    base64Mimetype === "image/jfif" ||
-    base64Mimetype === "image/JPG"
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jfif" ||
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/JPG"
   ) {
     cb(null, true);
     console.log("Donation uploaded successfully.");
