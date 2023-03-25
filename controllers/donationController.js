@@ -17,7 +17,13 @@ const storage = multer.diskStorage({
   },
 });
 const fileFilter = (req, file, cb) => {
-  if (file.mimetype === "image/png" || file.mimetype === "image/jpeg") {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jfif" ||
+    file.mimetype === "image/jpeg" ||
+    file.mimetype === "image/JPG"
+  ) {
     cb(null, true);
     console.log("Donation uploaded successfully.");
   } else {
