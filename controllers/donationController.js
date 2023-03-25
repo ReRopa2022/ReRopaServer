@@ -71,13 +71,13 @@ const donateItem = asyncHandler(async (req, res) => {
         condition,
       });
     } else {
-      const image = new Image({
-        name: req.file.filename,
+      const img = await new Image({
+        name: req.file.name,
         img: {
           data: fs.readFileSync(
-            path.join(__dirname, "../public/img/uploads/", req.file.filename)
+            path.join(__dirname, "../public/img/uploads/", req.file.name)
           ),
-          contentType: req.file.mimetype,
+          contentType: req.file.type,
         },
       }).save();
       donation = await Donation.create({
@@ -86,7 +86,7 @@ const donateItem = asyncHandler(async (req, res) => {
         genders,
         sectors,
         sizes,
-        image,
+        image: img,
         user,
         condition,
       });
