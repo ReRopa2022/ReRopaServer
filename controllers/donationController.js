@@ -72,12 +72,12 @@ const donateItem = asyncHandler(async (req, res) => {
       });
     } else {
       const img = await new Image({
-        name: req.file.name,
+        name: req.file.filename,
         img: {
           data: fs.readFileSync(
-            path.join(__dirname, "../public/img/uploads/", req.file.name)
+            path.join(__dirname, "../public/img/uploads/", req.file.filename)
           ),
-          contentType: req.file.type,
+          contentType: req.file.mimetype,
         },
       }).save();
       donation = await Donation.create({
@@ -215,6 +215,7 @@ const getBookOrGames = asyncHandler(async (req, res, next) => {
 
 const getImage = asyncHandler(async (req, res, next) => {
   const { imageId } = req.body;
+  console.log(imageId);
   Image.findOne({ id: imageId })
     .then((data) => res.send(data))
     .catch((error) => res.json(error));
