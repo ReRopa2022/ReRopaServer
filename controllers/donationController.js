@@ -14,10 +14,7 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const ext = file.mimetype.split("/")[1];
-    cb(
-      null,
-      `reropaDonation" + "-" +${file.originalname[0]} + ${Date.now()}.${ext}`
-    );
+    cb(null, `reropaDonation-${file.originalname[0]}-${Date.now()}.${ext}`);
   },
 });
 const fileFilter = (req, file, cb) => {
