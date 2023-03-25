@@ -8,8 +8,8 @@ const bodyParser = require("body-parser");
 connectDB();
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use("/public/img/uploads", express.static("/public/img/uploads"));
 const port = 5000 || process.env.PORT;
 const allowedOrigins = ["http://localhost:3000", "https://reropa.netlify.app"];
