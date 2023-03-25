@@ -13,7 +13,11 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, "../public/img/uploads/"));
   },
   filename: (req, file, cb) => {
-    cb(null, "reropaDonation" + "-" + Date.now().toString());
+    const ext = file.mimetype.split("/")[1];
+    cb(
+      null,
+      `reropaDonation" + "-" +${file.originalname[0]} + ${Date.now()}.${ext}`
+    );
   },
 });
 const fileFilter = (req, file, cb) => {
@@ -21,7 +25,7 @@ const fileFilter = (req, file, cb) => {
     file.mimetype === "image/png" ||
     file.mimetype === "image/jpg" ||
     file.mimetype === "image/jfif" ||
-    file.mimetype === "image/jpeg" 
+    file.mimetype === "image/jpeg"
   ) {
     cb(null, true);
     console.log("Donation uploaded successfully.");
