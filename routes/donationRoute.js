@@ -5,19 +5,24 @@ const {
   donateItem,
   getDonations,
   updateStatus,
-  upload,
+  // upload,
   deleteDonation,
   donateBookOrGame,
   getBookOrGames,
   deleteBooKOrGameDonation,
   updateBookGameStatus,
-  getImage,
+  // getImage,
 } = require("../controllers/donationController");
 
+// router
+//   .post("/", upload.single("image"), donateItem)
+//   .get("/", getDonations)
+//   .post("/image", getImage)
+//   .patch("/", updateStatus)
+//   .delete("/", deleteDonation);
 router
-  .post("/", upload.single("image"), donateItem)
+  .post("/", donateItem)
   .get("/", getDonations)
-  .post("/image", getImage)
   .patch("/", updateStatus)
   .delete("/", deleteDonation);
 router
@@ -26,6 +31,6 @@ router
   .delete("/book-or-game", deleteBooKOrGameDonation)
   .patch("/book-or-game", updateBookGameStatus);
 
-router.post("/image", getImage);
+// router.post("/image", getImage);
 
 module.exports = router;

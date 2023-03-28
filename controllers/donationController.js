@@ -1,48 +1,128 @@
 const asyncHandler = require("express-async-handler");
-const multer = require("multer");
+// const multer = require("multer");
 const Donation = require("../models/donationModel");
-const Image = require("../models/imageModel");
+// const Image = require("../models/imageModel");
 const BookOrGameDonation = require("../models/donationBookOrGameModel");
-const fs = require("fs");
+// const fs = require("fs");
 const path = require("path");
-const Request = require("../models/requestModel");
+// const Request = require("../models/requestModel");
 const { set } = require("mongoose");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../public/img/uploads/"));
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split("/")[1];
-    cb(null, `reropaDonation-${file.originalname[0]}-${Date.now()}.${ext}`);
-  },
-});
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jfif" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
-    console.log("Donation uploaded successfully.");
-  } else {
-    cb(null, false);
-    console.log("Donation denied.");
-  }
-};
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, path.join(__dirname, "../public/img/uploads/"));
+//   },
+//   filename: (req, file, cb) => {
+//     const ext = file.mimetype.split("/")[1];
+//     cb(null, `reropaDonation-${file.originalname[0]}-${Date.now()}.${ext}`);
+//   },
+// });
+// const fileFilter = (req, file, cb) => {
+//   if (
+//     file.mimetype === "image/png" ||
+//     file.mimetype === "image/jpg" ||
+//     file.mimetype === "image/jfif" ||
+//     file.mimetype === "image/jpeg"
+//   ) {
+//     cb(null, true);
+//     console.log("Donation uploaded successfully.");
+//   } else {
+//     cb(null, false);
+//     console.log("Donation denied.");
+//   }
+// };
 
-const upload = multer({
-  storage: storage,
-  limits: {
-    fileSize: 1024 * 1024 * 10,
-  },
-  fileFilter: fileFilter,
-});
+// const upload = multer({
+//   storage: storage,
+//   limits: {
+//     fileSize: 1024 * 1024 * 10,
+//   },
+//   fileFilter: fileFilter,
+// });
+// Donate WITH image and Algorithm
+// const donateItem = asyncHandler(async (req, res) => {
+//   const { types, seasons, sizes, sectors, genders, condition, image, user } =
+//     req.body;
 
+//   if (!types || !sizes || !seasons || !genders || !condition) {
+//     res.status(400).json({ Error: "Please include all fields." });
+//     return;
+//   }
+
+//   let donation;
+
+//   const request = await Request.find({
+//     seasons: { $in: seasons },
+//     genders: { $in: genders },
+//     sizes: { $in: sizes },
+//     sectors: { $in: sectors },
+//   });
+
+//   if (request[0]) {
+//     if (!req.file) {
+//       donation = await Donation.create({
+//         types,
+//         seasons,
+//         genders,
+//         sectors,
+//         sizes,
+//         image,
+//         user,
+//         condition,
+//       });
+//     } else {
+//       const img = await new Image({
+//         name: req.file.filename,
+//         img: {
+//           data: fs.readFileSync(
+//             path.join(__dirname, "../public/img/uploads/", req.file.filename)
+//           ),
+//           contentType: req.file.mimetype,
+//         },
+//       }).save();
+//       donation = await Donation.create({
+//         types,
+//         seasons,
+//         genders,
+//         sectors,
+//         sizes,
+//         image: img,
+//         user,
+//         condition,
+//       });
+//     }
+//   } else {
+//     res.status(200).json({
+//       isRequired: false,
+//     });
+//     console.log(donation);
+//     return;
+//   }
+
+//   if (donation) {
+//     res.status(201).json({
+//       _id: donation._id,
+//       types: donation.types,
+//       seasons: donation.seasons,
+//       genders: donation.genders,
+//       sectors: donation.sectors,
+//       sizes: donation.sizes,
+//       image: donation.image,
+//       condition: donation.condition,
+//       user: user,
+//       isRequired: true,
+//     });
+//     console.log(donation);
+//   } else {
+//     console.log(donation);
+//     res.status(400);
+//     throw new Error("Invalid donation data.");
+//   }
+// });
+
+// Donte WITHOUT alogorithm and without image
 const donateItem = asyncHandler(async (req, res) => {
-  const { types, seasons, sizes, sectors, genders, condition, image, user } =
-    req.body;
+  const { types, seasons, sizes, sectors, genders, condition, user } = req.body;
 
   if (!types || !sizes || !seasons || !genders || !condition) {
     res.status(400).json({ Error: "Please include all fields." });
@@ -51,53 +131,15 @@ const donateItem = asyncHandler(async (req, res) => {
 
   let donation;
 
-  const request = await Request.find({
-    seasons: { $in: seasons },
-    genders: { $in: genders },
-    sizes: { $in: sizes },
-    sectors: { $in: sectors },
+  donation = await Donation.create({
+    types,
+    seasons,
+    genders,
+    sectors,
+    sizes,
+    user,
+    condition,
   });
-
-  if (request[0]) {
-    if (!req.file) {
-      donation = await Donation.create({
-        types,
-        seasons,
-        genders,
-        sectors,
-        sizes,
-        image,
-        user,
-        condition,
-      });
-    } else {
-      const img = await new Image({
-        name: req.file.filename,
-        img: {
-          data: fs.readFileSync(
-            path.join(__dirname, "../public/img/uploads/", req.file.filename)
-          ),
-          contentType: req.file.mimetype,
-        },
-      }).save();
-      donation = await Donation.create({
-        types,
-        seasons,
-        genders,
-        sectors,
-        sizes,
-        image: img,
-        user,
-        condition,
-      });
-    }
-  } else {
-    res.status(200).json({
-      isRequired: false,
-    });
-    console.log(donation);
-    return;
-  }
 
   if (donation) {
     res.status(201).json({
@@ -107,7 +149,6 @@ const donateItem = asyncHandler(async (req, res) => {
       genders: donation.genders,
       sectors: donation.sectors,
       sizes: donation.sizes,
-      image: donation.image,
       condition: donation.condition,
       user: user,
       isRequired: true,
@@ -213,23 +254,23 @@ const getBookOrGames = asyncHandler(async (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
-const getImage = asyncHandler(async (req, res, next) => {
-  const { imageId } = req.body;
-  console.log(imageId);
-  Image.findOne({ id: imageId })
-    .then((data) => res.send(data))
-    .catch((error) => res.json(error));
-});
+// const getImage = asyncHandler(async (req, res, next) => {
+//   const { imageId } = req.body;
+//   console.log(imageId);
+//   Image.findOne({ id: imageId })
+//     .then((data) => res.send(data))
+//     .catch((error) => res.json(error));
+// });
 
 module.exports = {
   donateItem,
   getDonations,
-  upload,
+  // upload,
   updateStatus,
   deleteDonation,
   donateBookOrGame,
   getBookOrGames,
   deleteBooKOrGameDonation,
   updateBookGameStatus,
-  getImage,
+  // getImage,
 };
