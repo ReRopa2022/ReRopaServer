@@ -122,7 +122,8 @@ const { set } = require("mongoose");
 
 // Donte WITHOUT alogorithm and without image
 const donateItem = asyncHandler(async (req, res) => {
-  const { types, seasons, sizes, sectors, genders, condition, user } = req.body;
+  const { types, seasons, sizes, sectors, genders, condition, user, status } =
+    req.body;
 
   if (!types || !sizes || !seasons || !genders || !condition) {
     res.status(400).json({ Error: "Please include all fields." });
@@ -139,6 +140,7 @@ const donateItem = asyncHandler(async (req, res) => {
     sizes,
     user,
     condition,
+    status,
   });
 
   if (donation) {
@@ -152,6 +154,7 @@ const donateItem = asyncHandler(async (req, res) => {
       condition: donation.condition,
       user: user,
       isRequired: true,
+      status: donation.status,
     });
     console.log(donation);
   } else {
