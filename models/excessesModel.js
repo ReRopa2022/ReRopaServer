@@ -15,9 +15,9 @@ const excessesSchema = new mongoose.Schema(
       type: [],
       required: [true, "Please add sizes."],
     },
-    sectors: {
+    /*sectors: {
       type: [],
-    },
+    },*/
   },
 
   {

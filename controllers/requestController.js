@@ -10,7 +10,7 @@ const requestDonation = asyncHandler(async (req, res) => {
     address,
     seasons,
     sizes,
-    sectors,
+    //sectors,
     genders,
     isUrgent,
   } = req.body;
@@ -27,7 +27,7 @@ const requestDonation = asyncHandler(async (req, res) => {
     address,
     seasons,
     genders,
-    sectors,
+    //sectors,
     sizes,
     isUrgent,
   });
@@ -41,7 +41,7 @@ const requestDonation = asyncHandler(async (req, res) => {
       address: request.address,
       seasons: request.seasons,
       genders: request.genders,
-      sectors: request.sectors,
+      //sectors: request.sectors,
       sizes: request.sizes,
       isUrgent: request.isUrgent,
     });

@@ -17,9 +17,9 @@ const donationSchema = new mongoose.Schema(
       type: [],
       required: [true, "Please add sizes."],
     },
-    sectors: {
+    /*sectors: {
       type: [],
-    },
+    },*/
     condition: {
       type: String,
       required: [true, "Please enter the condition."],

@@ -3,7 +3,8 @@ const asyncHandler = require("express-async-handler");
 const Excesses = require("../models/excessesModel");
 
 const addExcesses = asyncHandler(async (req, res) => {
-  const { organization, seasons, sizes, sectors, genders, quantity } = req.body;
+  const { organization, seasons, sizes, /*sectors,*/ genders, quantity } =
+    req.body;
 
   if (!sizes || !seasons || !genders || !quantity) {
     res.status(400).json({ Error: "Please include all fields." });
@@ -14,7 +15,7 @@ const addExcesses = asyncHandler(async (req, res) => {
     organization,
     seasons,
     genders,
-    sectors,
+    //sectors,
     sizes,
     quantity,
   });
@@ -25,7 +26,7 @@ const addExcesses = asyncHandler(async (req, res) => {
       organization: excesses.organization,
       seasons: excesses.seasons,
       genders: excesses.genders,
-      sectors: excesses.sectors,
+      //sectors: excesses.sectors,
       sizes: excesses.sizes,
       quantity: excesses.quantity,
     });
