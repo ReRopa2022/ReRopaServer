@@ -22,6 +22,7 @@ app.use("/api/request", require("./routes/requestRoute"));
 app.use("/api/excesses", require("./routes/excessesRoute"));
 app.use("/api/location", require("./routes/locationRoute"));
 app.use("/api/ping", require("./routes/pingRoute"));
+app.use("/api/stats", require("./routes/statsRoute"));
 
 app.listen(port, () => console.log("Backend server live on " + port));
 
