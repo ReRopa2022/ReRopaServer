@@ -22,6 +22,18 @@ const locationSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please add type of the location."],
     },
+    lat: {
+      type: String,
+      required: [true, "Please add latitude"],
+    },
+    long: {
+      type: String,
+      required: [true, "Please add Longitude"],
+    },
+    display: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   {
