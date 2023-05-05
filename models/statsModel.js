@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const statsSchema = new mongoose.Schema({
-  type: String,
-  counter: Number,
+  donationClicks: [],
+  entryClicks: [],
 });
 const Stats = mongoose.model("Stats", statsSchema);
 
