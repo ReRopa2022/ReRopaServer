@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-
+const Click = require("../models/clickModel");
 const statsSchema = new mongoose.Schema({
-  type: String,
-  counter: Number,
+  donationClicks: [Click],
+  entryClicks: [Click],
 });
 const Stats = mongoose.model("Stats", statsSchema);
 

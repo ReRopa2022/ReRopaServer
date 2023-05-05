@@ -2,9 +2,17 @@ const express = require("express");
 const router = express.Router();
 const {
   getClothesByQuantityAndDate,
-  donateCounter,
+  addToDonateClicksList,
+  addToEntryClicksList,
+  getDonateClicksList,
+  getEntryClicksList,
 } = require("../controllers/statsController");
 
 router.get("/clothes", getClothesByQuantityAndDate);
-router.get("/stats-donations", donateCounter);
+router
+  .get("/stats-donations", getDonateClicksList)
+  .post("/stats-donations", addToDonateClicksList);
+router
+  .get("/stats-entries", getEntryClicksList)
+  .post("/stats-entries", addToEntryClicksList);
 module.exports = router;
