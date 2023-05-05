@@ -1,5 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const { entriesCounter } = require("../controllers/statsController");
-router.get("/", entriesCounter);
+const { addToEntryClicksList } = require("../controllers/statsController");
+router.get("/", addToEntryClicksList);
 module.exports = router;
