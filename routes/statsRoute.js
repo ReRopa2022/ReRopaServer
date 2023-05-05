@@ -9,10 +9,6 @@ const {
 } = require("../controllers/statsController");
 
 router.get("/clothes", getClothesByQuantityAndDate);
-router
-  .get("/stats-donations", getDonateClicksList)
-  .post("/stats-donations", addToDonateClicksList);
-router
-  .get("/stats-entries", getEntryClicksList)
-  .post("/stats-entries", addToEntryClicksList);
+router.get("/stats-donations", getDonateClicksList);
+router.get("/stats-entries", getEntryClicksList);
 module.exports = router;

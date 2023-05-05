@@ -1,5 +1,6 @@
 const Donation = require("../models/donationModel");
 const Stats = require("../models/statsModel");
+const Click = require("../models/clickModel");
 
 //const BookOrGameDonation = require("../models/donationBookOrGameModel");
 
@@ -33,6 +34,7 @@ async function addToEntryClicksList(req, res) {
   try {
     const newClick = new Click({
       type: "entry",
+      date: new Date(),
     });
     const stats = await Stats.findOneAndUpdate(
       {},
@@ -51,6 +53,7 @@ async function addToDonateClicksList(req, res) {
   try {
     const newClick = new Click({
       type: "donation",
+      date: new Date(),
     });
     const stats = await Stats.findOneAndUpdate(
       {},
