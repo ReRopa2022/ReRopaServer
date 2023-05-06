@@ -48,7 +48,6 @@ async function addToEntryClicksList(req, res) {
   }
 }
 
-// Function to add a new click to the donation clicks list
 async function addToDonateClicksList(req, res) {
   try {
     const newClick = new Click({
@@ -67,34 +66,6 @@ async function addToDonateClicksList(req, res) {
   }
 }
 
-// Function to get the list of entry clicks
-// async function getEntryClicksList(req, res) {
-//   try {
-//     const stats = await Stats.findOne({});
-//     res.json(
-//       stats.entryClicks.aggregate([
-//         {
-//           $group: {
-//             _id: { $dateToString: { format: "%Y-%m-%d", date: "date" } },
-//             count: { $sum: 1 },
-//           },
-//         },
-//         {
-//           $project: {
-//             date: "$_id",
-//             count: 1,
-//             _id: 0,
-//           },
-//         },
-
-//         { $sort: { date: 1 } },
-//       ])
-//     );
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Server Error");
-//   }
-// }
 async function getEntryClicksList(req, res) {
   try {
     const stats = await Stats.findOne({});
