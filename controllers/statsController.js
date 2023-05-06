@@ -2,8 +2,6 @@ const Donation = require("../models/donationModel");
 const Stats = require("../models/statsModel");
 const Click = require("../models/clickModel");
 
-//const BookOrGameDonation = require("../models/donationBookOrGameModel");
-
 const getClothesByQuantityAndDate = async (req, res) => {
   try {
     const result = await Donation.aggregate([
@@ -29,7 +27,6 @@ const getClothesByQuantityAndDate = async (req, res) => {
   }
 };
 
-// Function to add a new click to the entry clicks list
 async function addToEntryClicksList(req, res) {
   try {
     const newClick = new Click({
