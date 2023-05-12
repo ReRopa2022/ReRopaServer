@@ -5,13 +5,13 @@ const router = express.Router();
 const {
   addLocation,
   getLocations,
-  updateDisplay,
   deleteLocation,
+  updateLocation,
 } = require("../controllers/locationController");
 
 router.post("/", addLocation);
 router.get("/", getLocations);
-router.patch("/", updateDisplay);
+router.put("/", updateLocation);
 router.delete("/", deleteLocation);
 
 module.exports = router;

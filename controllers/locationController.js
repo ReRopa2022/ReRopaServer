@@ -47,6 +47,56 @@ const addLocation = asyncHandler(async (req, res) => {
   }
 });
 
+const updateLocation = asyncHandler(async (req, res) => {
+  const { id, city, street, street_no, info, type, lat, long, display } =
+    req.body;
+
+  if (
+    !city ||
+    !street ||
+    !street_no ||
+    !info ||
+    !type ||
+    !lat ||
+    !long ||
+    display === null
+  ) {
+    res.status(400).json({ Error: "Please include all fields." });
+    return;
+  }
+
+  let location = await Location.findOneAndUpdate(
+    { _id: id },
+    {
+      city,
+      street,
+      street_no,
+      info,
+      type,
+      lat,
+      long,
+      display,
+    }
+  );
+
+  if (location) {
+    res.status(201).json({
+      _id: location._id,
+      city: location.city,
+      street: location.street,
+      street_no: location.street_no,
+      info: location.info,
+      type: location.type,
+      lat: location.lat,
+      long: location.long,
+      display: location.display,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid location data.");
+  }
+});
+
 const getLocations = asyncHandler(async (req, res, next) => {
   Location.find()
     .then((data) => res.json(data))
@@ -86,4 +136,5 @@ module.exports = {
   getLocations,
   updateDisplay,
   deleteLocation,
+  updateLocation,
 };
