@@ -4,10 +4,10 @@ const donationSchema = new mongoose.Schema(
   {
     types: {
       type: String,
-      required: [true, "Please specify the season."],
+      required: [true, "Please specify the type of donation."],
     },
     seasons: {
-      type: [],
+      type: String,
     },
     genders: {
       type: String,

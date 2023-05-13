@@ -103,6 +103,12 @@ const getLocations = asyncHandler(async (req, res, next) => {
     .catch((error) => res.json(error));
 });
 
+const getDisplayLocations = asyncHandler(async (req, res, next) => {
+  Location.find({ display: true })
+    .then((data) => res.json(data))
+    .catch((error) => res.json(error));
+});
+
 const updateDisplay = asyncHandler(async (req, res, next) => {
   try {
     const { _id, display } = req.body;
@@ -137,4 +143,5 @@ module.exports = {
   updateDisplay,
   deleteLocation,
   updateLocation,
+  getDisplayLocations,
 };
